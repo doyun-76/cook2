@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>요리 도우미 | 냉장고 속 재료로 만드는 한 끼</title>
+<style>
+:root{--green:#258653;--green-dark:#17643c;--mint:#eaf6ee;--cream:#fff8ed;--ink:#24332a;--muted:#718078;--line:#e5ece7;--white:#fff;--shadow:0 12px 34px rgba(32,73,48,.08)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f7faf7;color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif;line-height:1.6}button,input,textarea,select{font:inherit}button{cursor:pointer}.wrap{width:min(1080px,calc(100% - 32px));margin:auto}
+header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}.nav{height:68px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{font-size:21px;font-weight:850;color:var(--green-dark);text-decoration:none;white-space:nowrap}.navlinks{display:flex;gap:8px;flex-wrap:wrap}.navlinks a{color:#53635a;text-decoration:none;font-size:14px;padding:8px 11px;border-radius:20px}.navlinks a:hover{background:var(--mint);color:var(--green-dark)}
+.hero{margin:28px auto 22px;background:linear-gradient(115deg,#fff3df,#edf8ef);border-radius:26px;padding:clamp(26px,5vw,54px);display:grid;grid-template-columns:1.4fr .8fr;align-items:center;gap:24px;overflow:hidden}.eyebrow{color:var(--green);font-weight:800;font-size:13px;letter-spacing:.04em}.hero h1{font-size:clamp(30px,5vw,48px);line-height:1.2;margin:10px 0 14px;letter-spacing:-.04em}.hero p{margin:0;color:#637168;max-width:560px}.hero-art{font-size:clamp(100px,17vw,170px);text-align:center;filter:drop-shadow(0 12px 10px #b9c9b255)}
+main{padding-bottom:42px}.section{background:white;border:1px solid var(--line);border-radius:22px;padding:clamp(18px,3vw,28px);margin:18px 0;box-shadow:var(--shadow)}.section-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:18px}.section h2{font-size:22px;margin:0 0 5px;letter-spacing:-.03em}.sub{color:var(--muted);font-size:14px;margin:0}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}.tab{border:1px solid var(--line);background:#fff;color:#58665e;border-radius:999px;padding:9px 15px;font-weight:700}.tab.active{background:var(--green);border-color:var(--green);color:white}.panel{display:none}.panel.active{display:block}.ingredient-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.group-title{font-weight:800;margin:0 0 9px;font-size:14px}.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{border:1px solid #dfe9e2;background:#fbfdfb;color:#425249;border-radius:999px;padding:8px 12px;font-size:14px}.chip.selected{background:var(--mint);border-color:#8bc6a0;color:var(--green-dark);font-weight:800}.selected-box{margin:18px 0 12px;padding:13px 15px;background:#f6faf7;border-radius:14px;min-height:48px;font-size:14px;color:#56645b}.actions{display:flex;gap:9px;flex-wrap:wrap}.btn{border:0;border-radius:12px;padding:11px 17px;font-weight:800;background:var(--green);color:white}.btn:hover{background:var(--green-dark)}.btn.secondary{background:#edf5ef;color:var(--green-dark)}.btn.ghost{background:white;color:#53635a;border:1px solid var(--line)}.btn.danger{background:#fff0ef;color:#b13c32}.btn.small{padding:7px 11px;font-size:13px}
+.field{display:flex;flex-direction:column;gap:6px;margin:12px 0}.field label{font-size:14px;font-weight:750}.field input,.field textarea,.field select{width:100%;border:1px solid #dce6df;border-radius:12px;padding:11px 12px;background:white;color:var(--ink);outline:none}.field input:focus,.field textarea:focus{border-color:#70b68a;box-shadow:0 0 0 3px #25865318}.field textarea{min-height:92px;resize:vertical}.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.recipe-card{border:1px solid var(--line);border-radius:17px;padding:15px;background:#fff;display:flex;flex-direction:column;gap:9px}.recipe-top{display:flex;gap:12px;align-items:center}.food-icon{width:54px;height:54px;border-radius:15px;background:var(--cream);display:grid;place-items:center;font-size:29px;flex:none}.recipe-card h3{margin:0;font-size:17px}.meta{font-size:12px;color:var(--muted)}.recipe-card p{font-size:13px;color:#5f6c64;margin:0}.tag{display:inline-block;background:#eff7f1;color:var(--green-dark);font-size:12px;font-weight:750;border-radius:20px;padding:4px 9px}.empty{padding:25px;text-align:center;color:var(--muted);background:#f8faf8;border-radius:15px;grid-column:1/-1}.notice{background:#fff8e9;border:1px solid #f4e5c5;color:#75603b;padding:13px 15px;border-radius:13px;font-size:13px;margin-top:12px}
+.sub-result{margin-top:16px;border:1px solid var(--line);border-radius:16px;padding:16px;background:#fbfdfb}.sub-row{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}.sub-row:last-child{border:0}.sub-row strong{color:var(--green-dark)}
+.my-recipes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.saved-item{border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;justify-content:space-between;gap:12px;align-items:center}.saved-item h3{font-size:15px;margin:0}.saved-item p{font-size:12px;color:var(--muted);margin:3px 0 0}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.step{background:#f6faf7;border-radius:14px;padding:15px}.step b{display:block;color:var(--green);font-size:13px;margin-bottom:5px}.step span{font-size:13px;color:#58665e}
+footer{text-align:center;padding:28px 16px 36px;color:var(--muted);font-size:13px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#24332a;color:white;padding:11px 17px;border-radius:999px;box-shadow:var(--shadow);z-index:30;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1}
+@media(max-width:700px){.nav{height:auto;min-height:62px;align-items:flex-start;padding:13px 0;flex-direction:column}.navlinks{width:100%;overflow-x:auto;flex-wrap:nowrap}.navlinks a{white-space:nowrap;padding:6px 9px}.hero{grid-template-columns:1fr;gap:5px}.hero-art{font-size:95px}.ingredient-groups,.results,.my-recipes{grid-template-columns:1fr}.steps{grid-template-columns:repeat(2,1fr)}.field-row{grid-template-columns:1fr}.section-head{flex-direction:column}.saved-item{align-items:flex-start}.saved-item .actions{flex-direction:column}}
+@media(max-width:390px){.wrap{width:calc(100% - 22px)}.steps{grid-template-columns:1fr 1fr}.chip{font-size:13px;padding:7px 10px}}
+
+/* Minimalism theme: user-provided design tokens */
+:root {
+  --ism-color-1: #FFFFFF;
+  --ism-color-2: #1A1A1A;
+  --ism-color-3: #F5F5F5;
+  --ism-color-4: #E0E0E0;
+  --ism-color-background: #1A1A1A;
+  --ism-color-foreground: #FFFFFF;
+  --ism-color-accent: #F5F5F5;
+  --ism-color-surface: #2C2C2C;
+  --ism-color-muted: #818181;
+  --ism-color-border: #4C4C4C;
+  --ism-gutter: 24px;
+  --ism-space-min: 32px;
+  --ism-space-max: 64px;
+  --ism-page-margin: 5vw;
+  --ism-line-height: 1.6;
+  --ism-letter-spacing: -0.02em;
+  --ism-motion-duration: 300ms;
+  --ism-motion-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  --green: #FFFFFF;
+  --green-dark: #FFFFFF;
+  --mint: #3A3A3A;
+  --cream: #3A3A3A;
+  --ink: #FFFFFF;
+  --muted: #818181;
+  --line: #4C4C4C;
+  --white: #2C2C2C;
+  --shadow: 0 10px 30px rgba(0,0,0,.16);
+}
+body { background: var(--ism-color-background); color: var(--ism-color-foreground); letter-spacing: var(--ism-letter-spacing); }
+header { background: rgba(26,26,26,.96); border-color: var(--ism-color-border); }
+.brand, .navlinks a:hover, .eyebrow, .group-title, .sub-row strong, .step b { color: var(--ism-color-foreground); }
+.navlinks a { color: var(--ism-color-muted); }
+.navlinks a:hover { background: var(--ism-color-surface); }
+.hero { background: var(--ism-color-surface); border: 1px solid var(--ism-color-border); border-radius: 4px; }
+.hero p, .sub, .meta, .recipe-card p, .step span, footer { color: var(--ism-color-muted); }
+.section { background: var(--ism-color-surface); border: 1px solid var(--ism-color-border); border-radius: 4px; box-shadow: none; }
+.tab, .chip, .btn.ghost { background: transparent; color: var(--ism-color-foreground); border: 1px solid var(--ism-color-border); border-radius: 2px; }
+.tab.active, .chip.selected { background: var(--ism-color-accent); color: var(--ism-color-background); border-color: var(--ism-color-accent); }
+.chip { color: var(--ism-color-foreground); }
+.selected-box, .empty, .step, .sub-result { background: #242424; color: var(--ism-color-muted); border: 1px solid var(--ism-color-border); border-radius: 2px; }
+.btn { background: var(--ism-color-accent); color: var(--ism-color-background); border-radius: 2px; transition: opacity var(--ism-motion-duration) var(--ism-motion-easing); }
+.btn:hover { background: var(--ism-color-1); opacity: .86; }
+.btn.secondary { background: #3A3A3A; color: var(--ism-color-foreground); border: 1px solid var(--ism-color-border); }
+.btn.danger { background: #3A3030; color: #FFFFFF; border: 1px solid #665050; }
+.field input, .field textarea, .field select { background: #202020; color: var(--ism-color-foreground); border: 1px solid var(--ism-color-border); border-radius: 2px; }
+.field input::placeholder, .field textarea::placeholder { color: var(--ism-color-muted); }
+.field input:focus, .field textarea:focus { border-color: var(--ism-color-3); box-shadow: 0 0 0 2px rgba(245,245,245,.12); }
+.recipe-card, .saved-item { background: #242424; border: 1px solid var(--ism-color-border); border-radius: 2px; }
+.food-icon { background: #3A3A3A; border-radius: 2px; }
+.tag { background: #3A3A3A; color: var(--ism-color-foreground); border: 1px solid var(--ism-color-border); border-radius: 2px; }
+.notice { background: #292929; color: #D0D0D0; border: 1px solid var(--ism-color-border); border-radius: 2px; }
+.sub-row { border-color: var(--ism-color-border); }
+footer { background: var(--ism-color-background); }
+.toast { background: var(--ism-color-1); color: var(--ism-color-2); border-radius: 2px; }
+button, input, textarea, select { font-family: inherit; }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--ism-color-1); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; } }
+
+</style>
+</head>
+<body>
+<header><div class="wrap nav">
+  <a class="brand" href="#">🍳 요리 도우미</a>
+  <nav class="navlinks"><a href="#ingredients">재료로 요리 찾기</a><a href="#substitute">재료 대체하기</a><a href="#myrecipes">나만의 레시피</a></nav>
+</div></header>
+<div class="wrap">
+<section class="hero">
+  <div><div class="eyebrow">YOUR LITTLE HOME COOKING HELPER</div><h1>냉장고 속 재료로<br>오늘 뭐 먹지?</h1><p>요리 초보도 괜찮아요. 가지고 있는 재료를 선택하면 만들 수 있는 요리를 추천하고, 없는 재료는 대체 방법을 알려드릴게요.</p></div>
+  <div class="hero-art" aria-hidden="true">🥘</div>
+</section>
+<main>
+<section class="section" id="ingredients">
+  <div class="section-head"><div><h2>① 냉장고 재료 선택</h2><p class="sub">집에 있는 재료를 골라보세요. 여러 개 선택할 수 있어요.</p></div></div>
+  <div id="ingredientGroups" class="ingredient-groups"></div>
+  <div class="selected-box" id="selectedIngredients">선택한 재료가 여기에 표시됩니다.</div>
+  <div class="actions"><button class="btn" id="findRecipes">이 재료로 요리 찾기</button><button class="btn ghost" id="clearIngredients">선택 초기화</button></div>
+  <div id="recommendations" class="results" style="margin-top:16px"></div>
+</section>
+
+<section class="section" id="substitute">
+  <div class="section-head"><div><h2>② 없는 재료 대체하기</h2><p class="sub">레시피에서 빠진 재료를 선택하면 대체 재료와 사용량을 확인할 수 있어요.</p></div></div>
+  <div class="field"><label for="dishName">요리 이름 (선택)</label><input id="dishName" placeholder="예: 크림 파스타"></div>
+  <div class="field"><label>없는 재료 선택</label><div class="chips" id="missingIngredients"></div></div>
+  <div class="field"><label for="originalAmount">원래 재료의 양</label><input id="originalAmount" type="number" min="0" step="any" value="200"></div>
+  <div class="field-row"><div class="field"><label for="amountUnit">단위</label><select id="amountUnit"><option>g</option><option>ml</option><option>개</option><option>큰술</option><option>작은술</option></select></div><div class="field"><label for="replacementChoice">대체 방법</label><select id="replacementChoice"><option value="auto">추천 대체재 자동 선택</option></select></div></div>
+  <button class="btn" id="showSubstitute">대체 재료 확인하기</button>
+  <div id="substituteResult"></div>
+  <div class="notice">※ 대체 비율은 일반적인 요리 기준의 참고값입니다. 제품과 요리법에 따라 맛과 질감이 달라질 수 있어요.</div>
+</section>
+
+<section class="section" id="myrecipes">
+  <div class="section-head"><div><h2>③ 나만의 레시피</h2><p class="sub">직접 레시피를 등록하거나 저장한 레시피를 수정할 수 있어요.</p></div></div>
+  <form id="recipeForm">
+    <input type="hidden" id="editId">
+    <div class="field"><label for="recipeName">요리 이름</label><input id="recipeName" required maxlength="60" placeholder="예: 참치마요 덮밥"></div>
+    <div class="field"><label for="recipeIngredients">재료와 분량</label><textarea id="recipeIngredients" required placeholder="예: 밥 1공기, 참치 1캔, 마요네즈 1큰술"></textarea></div>
+    <div class="field"><label for="recipeSteps">조리 순서</label><textarea id="recipeSteps" required placeholder="1. 밥을 준비한다.&#10;2. 참치와 마요네즈를 섞는다.&#10;3. 밥 위에 올려 완성한다."></textarea></div>
+    <div class="field-row"><div class="field"><label for="recipeTime">조리 시간 (분)</label><input id="recipeTime" type="number" min="1" max="600" value="15"></div><div class="field"><label for="recipeLevel">난이도</label><select id="recipeLevel"><option>쉬움</option><option>보통</option><option>어려움</option></select></div></div>
+    <div class="actions"><button class="btn" type="submit" id="saveRecipe">레시피 저장하기</button><button class="btn ghost" type="button" id="cancelEdit" hidden>수정 취소</button></div>
+  </form>
+  <div style="height:1px;background:var(--line);margin:22px 0"></div>
+  <h3 style="font-size:17px;margin:0 0 12px">내가 저장한 레시피</h3>
+  <div class="my-recipes" id="savedRecipes"></div>
+  <p class="sub" style="margin-top:12px">저장한 내용은 현재 브라우저에 보관됩니다. 다른 기기와 자동으로 공유되지는 않아요.</p>
+</section>
+
+<section class="section" id="guide">
+  <div class="section-head"><div><h2>처음 사용하는 분들을 위한 안내</h2><p class="sub">네 단계면 오늘의 한 끼 준비 끝!</p></div></div>
+  <div class="steps"><div class="step"><b>STEP 01</b><span>집에 있는 재료를 선택해요.</span></div><div class="step"><b>STEP 02</b><span>만들 수 있는 요리를 확인해요.</span></div><div class="step"><b>STEP 03</b><span>부족한 재료는 대체 방법을 확인해요.</span></div><div class="step"><b>STEP 04</b><span>나만의 레시피를 저장해요.</span></div></div>
+</section>
+</main>
+</div>
+<footer>🍳 요리 도우미 · 누구나 쉽게 시작하는 집밥<br>레시피와 대체 비율은 참고용이며, 알레르기 및 식품 안전 정보를 반드시 확인하세요.<br>© 2026 요리 도우미</footer>
+<div class="toast" id="toast" role="status"></div>
+<script>
+const ingredientData={
+ "곡류":["밥","식빵","파스타면","라면","떡"],
+ "채소":["김치","양파","대파","마늘","감자","당근","애호박","양배추"],
+ "단백질":["계란","두부","햄","참치","닭고기","돼지고기"],
+ "유제품·기타":["우유","치즈","버터","두유"]
+};
+const recipes=[
+ {name:"김치볶음밥",icon:"🍳",time:15,level:"쉬움",ingredients:["밥","김치","계란","대파"],optional:["대파"],steps:["김치와 대파를 잘게 썰어요.","팬에 기름을 두르고 김치를 볶아요.","밥을 넣고 골고루 볶아요.","계란 프라이를 올리면 완성!"]},
+ {name:"계란볶음밥",icon:"🍚",time:10,level:"쉬움",ingredients:["밥","계란","대파"],optional:["대파"],steps:["대파를 송송 썰어요.","팬에 기름을 두르고 계란을 볶아요.","밥을 넣고 대파와 함께 볶아요.","소금으로 간을 맞춰요."]},
+ {name:"두부김치",icon:"🥘",time:15,level:"쉬움",ingredients:["두부","김치","대파"],optional:["대파"],steps:["두부를 먹기 좋게 썰어 데워요.","김치를 팬에 볶아요.","두부와 볶은 김치를 함께 담아요."]},
+ {name:"참치마요 덮밥",icon:"🍙",time:8,level:"쉬움",ingredients:["밥","참치","계란"],optional:["계란"],steps:["참치의 기름을 빼요.","밥 위에 참치를 올려요.","마요네즈가 있다면 뿌려 완성해요."]},
+ {name:"감자채볶음",icon:"🥔",time:15,level:"쉬움",ingredients:["감자","양파","당근"],optional:["양파","당근"],steps:["감자와 채소를 가늘게 썰어요.","팬에 기름을 두르고 감자를 볶아요.","채소를 넣고 익을 때까지 볶아요."]},
+ {name:"햄계란덮밥",icon:"🍳",time:12,level:"쉬움",ingredients:["밥","햄","계란","양파"],optional:["양파"],steps:["햄과 양파를 썰어요.","팬에서 햄과 양파를 볶아요.","계란을 익혀 밥 위에 올려요."]},
+ {name:"토마토 없는 간단 파스타",icon:"🍝",time:20,level:"보통",ingredients:["파스타면","마늘","버터","치즈"],optional:["치즈"],steps:["파스타면을 삶아요.","팬에 마늘과 버터를 볶아요.","면과 면수를 넣고 섞어요.","치즈가 있다면 뿌려 마무리해요."]}
+];
+const substitutes={
+ "우유":[{name:"두유",ratio:1,note:"대부분의 소스와 반죽에서 1:1로 대체할 수 있어요.",status:"대체 가능"},{name:"물",ratio:0.8,note:"풍미와 고소함이 줄어들 수 있어요. 조금 적게 넣고 농도를 조절하세요.",status:"상황에 따라 가능"}],
+ "버터":[{name:"식용유",ratio:0.8,note:"녹인 버터 100g 대신 식용유 약 80ml부터 넣어보세요. 풍미는 달라져요.",status:"대체 가능"}],
+ "계란":[{name:"으깬 바나나",ratio:0.5,note:"베이킹에서 계란 1개 대신 으깬 바나나 약 50g을 사용할 수 있어요. 단맛과 향이 더해져요.",status:"베이킹에서 가능"},{name:"두부",ratio:0.6,note:"요리 종류에 따라 으깬 두부를 활용할 수 있지만 계란의 결착력은 달라져요.",status:"요리에 따라 가능"}],
+ "치즈":[{name:"생략",ratio:0,note:"토핑용 치즈라면 생략해도 요리가 가능해요. 고소한 맛은 줄어들어요.",status:"생략 가능"}],
+ "대파":[{name:"양파",ratio:1,note:"향을 내는 용도라면 양파를 비슷한 양으로 사용해도 좋아요.",status:"대체 가능"},{name:"생략",ratio:0,note:"장식이나 향을 더하는 용도라면 생략해도 괜찮아요.",status:"생략 가능"}],
+ "양파":[{name:"대파",ratio:1,note:"볶음 요리에서 향을 보완할 수 있지만 단맛과 식감은 달라져요.",status:"상황에 따라 가능"},{name:"생략",ratio:0,note:"양파가 부재료라면 생략할 수 있어요.",status:"생략 가능"}],
+ "김치":[{name:"잘 익은 배추 + 고춧가루",ratio:1,note:"김치 특유의 발효 맛은 완전히 대체하기 어려워요.",status:"완전 대체 어려움"}],
+ "마늘":[{name:"마늘가루",ratio:0.3,note:"다진 마늘보다 적은 양부터 넣고 맛을 조절하세요.",status:"대체 가능"}],
+ "파슬리":[{name:"생략",ratio:0,note:"장식이나 향을 위한 재료라면 생략해도 괜찮아요.",status:"생략 가능"}]
+};
+let selected=new Set();
+const $=id=>document.getElementById(id);
+function toast(msg){const el=$("toast");el.textContent=msg;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2300)}
+function renderIngredients(){
+ $("ingredientGroups").innerHTML=Object.entries(ingredientData).map(([group,items])=>`<div><p class="group-title">${group}</p><div class="chips">${items.map(x=>`<button type="button" class="chip ${selected.has(x)?"selected":""}" data-ing="${x}" aria-pressed="${selected.has(x)}">${x}</button>`).join("")}</div></div>`).join("");
+ $("ingredientGroups").querySelectorAll("[data-ing]").forEach(btn=>btn.addEventListener("click",()=>{const x=btn.dataset.ing;selected.has(x)?selected.delete(x):selected.add(x);renderIngredients()}));
+ $("selectedIngredients").textContent=selected.size?"선택한 재료: "+[...selected].join(", "):"선택한 재료가 여기에 표시됩니다.";
+}
+function renderRecommendations(){
+ const chosen=[...selected];const target=$("recommendations");
+ if(!chosen.length){target.innerHTML='<div class="empty">먼저 냉장고에 있는 재료를 선택해 주세요. 🥬</div>';return}
+ const ranked=recipes.map(r=>{const matched=r.ingredients.filter(x=>chosen.includes(x));const missing=r.ingredients.filter(x=>!chosen.includes(x)&&!r.optional.includes(x));return {...r,matched,missing,score:matched.length/r.ingredients.length}}).filter(r=>r.matched.length>0).sort((a,b)=>a.missing.length-b.missing.length||b.score-a.score);
+ if(!ranked.length){target.innerHTML='<div class="empty">선택한 재료로 바로 만들 수 있는 예시 레시피를 찾지 못했어요. 재료를 더 선택해 보세요.</div>';return}
+ target.innerHTML=ranked.slice(0,6).map(r=>`<article class="recipe-card"><div class="recipe-top"><div class="food-icon">${r.icon}</div><div><h3>${r.name}</h3><div class="meta">⏱ ${r.time}분 · 난이도 ${r.level}</div></div></div><p>사용 가능: ${r.matched.join(", ")}</p><p>${r.missing.length?"추가 필요: "+r.missing.join(", "):"필요 재료를 모두 가지고 있어요!"}</p><div><span class="tag">${r.missing.length?"일부 재료 추가 필요":"바로 만들 수 있어요"}</span></div><details><summary style="cursor:pointer;font-size:13px;font-weight:750;color:var(--green-dark)">간단 조리 순서 보기</summary><ol style="font-size:13px;padding-left:20px">${r.steps.map(s=>`<li>${s}</li>`).join("")}</ol></details></article>`).join("");
+}
+const missingList=["우유","버터","계란","치즈","대파","양파","김치","마늘","파슬리"];
+let missingSelected="우유";
+function renderMissing(){
+ $("missingIngredients").innerHTML=missingList.map(x=>`<button type="button" class="chip ${missingSelected===x?"selected":""}" data-missing="${x}">${x}</button>`).join("");
+ $("missingIngredients").querySelectorAll("[data-missing]").forEach(b=>b.addEventListener("click",()=>{missingSelected=b.dataset.missing;renderMissing();renderReplacementOptions()}));
+ renderReplacementOptions();
+}
+function renderReplacementOptions(){
+ const options=substitutes[missingSelected]||[{name:"생략",ratio:0,note:"현재 등록된 대체 정보가 많지 않아요. 요리에서 해당 재료가 핵심인지 확인해 주세요.",status:"정보 부족"}];
+ $("replacementChoice").innerHTML='<option value="auto">추천 대체재 자동 선택</option>'+options.map((o,i)=>`<option value="${i}">${o.name}</option>`).join("");
+}
+function showSubstitute(){
+ const options=substitutes[missingSelected]||[{name:"생략",ratio:0,note:"현재 등록된 대체 정보가 많지 않아요. 해당 재료가 요리의 핵심인지 확인해 주세요.",status:"정보 부족"}];
+ const idx=$("replacementChoice").value==="auto"?0:Number($("replacementChoice").value);const o=options[idx]||options[0];
+ const amount=Math.max(0,Number($("originalAmount").value)||0);const unit=$("amountUnit").value;
+ const calculated=o.ratio===0?"사용하지 않아도 돼요":`${formatAmount(amount*o.ratio)} ${unit}`;
+ $("substituteResult").innerHTML=`<div class="sub-result"><div class="sub-row"><span>원래 재료</span><strong>${missingSelected} ${amount} ${unit}</strong></div><div class="sub-row"><span>추천 대체재</span><strong>${o.name}</strong></div><div class="sub-row"><span>대체 사용량</span><strong>${calculated}</strong></div><div class="sub-row"><span>대체 가능 여부</span><strong>${o.status}</strong></div><p style="font-size:13px;color:#5f6c64;margin:12px 0 0">${o.note}</p></div>`;
+}
+function formatAmount(n){return Number.isInteger(n)?n:Number(n.toFixed(1))}
+function getSaved(){try{return JSON.parse(localStorage.getItem("cookingHelperRecipes")||"[]")}catch(e){return []}}
+function setSaved(items){localStorage.setItem("cookingHelperRecipes",JSON.stringify(items))}
+function renderSaved(){
+ const items=getSaved();const el=$("savedRecipes");
+ if(!items.length){el.innerHTML='<div class="empty">아직 저장한 레시피가 없어요. 위에서 첫 레시피를 등록해 보세요!</div>';return}
+ el.innerHTML=items.map(r=>`<div class="saved-item"><div><h3>${escapeHTML(r.name)}</h3><p>${r.time}분 · ${escapeHTML(r.level)}</p></div><div class="actions"><button class="btn secondary small" data-edit="${r.id}">수정</button><button class="btn danger small" data-delete="${r.id}">삭제</button></div></div>`).join("");
+ el.querySelectorAll("[data-edit]").forEach(b=>b.addEventListener("click",()=>editRecipe(b.dataset.edit)));
+ el.querySelectorAll("[data-delete]").forEach(b=>b.addEventListener("click",()=>deleteRecipe(b.dataset.delete)));
+}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function resetForm(){$("recipeForm").reset();$("editId").value="";$("recipeTime").value=15;$("saveRecipe").textContent="레시피 저장하기";$("cancelEdit").hidden=true}
+$("recipeForm").addEventListener("submit",e=>{
+ e.preventDefault();const items=getSaved();const id=$("editId").value||String(Date.now());
+ const item={id,name:$("recipeName").value.trim(),ingredients:$("recipeIngredients").value.trim(),steps:$("recipeSteps").value.trim(),time:Number($("recipeTime").value)||15,level:$("recipeLevel").value};
+ if(!item.name||!item.ingredients||!item.steps){toast("필수 항목을 모두 입력해 주세요.");return}
+ const index=items.findIndex(x=>x.id===id);if(index>=0)items[index]=item;else items.unshift(item);
+ try{setSaved(items);renderSaved();resetForm();toast(index>=0?"레시피를 수정했어요.":"레시피를 저장했어요.")}catch(err){toast("저장 공간이 부족하거나 브라우저 저장이 제한되어 있어요.")}
+});
+function editRecipe(id){const r=getSaved().find(x=>x.id===id);if(!r)return;$("editId").value=r.id;$("recipeName").value=r.name;$("recipeIngredients").value=r.ingredients;$("recipeSteps").value=r.steps;$("recipeTime").value=r.time;$("recipeLevel").value=r.level;$("saveRecipe").textContent="수정 내용 저장하기";$("cancelEdit").hidden=false;$("myrecipes").scrollIntoView({behavior:"smooth"})}
+function deleteRecipe(id){if(!confirm("이 레시피를 삭제할까요?"))return;setSaved(getSaved().filter(x=>x.id!==id));renderSaved();if($("editId").value===id)resetForm();toast("레시피를 삭제했어요.")}
+$("cancelEdit").addEventListener("click",resetForm);
+$("findRecipes").addEventListener("click",()=>{renderRecommendations();$("recommendations").scrollIntoView({behavior:"smooth",block:"nearest"})});
+$("clearIngredients").addEventListener("click",()=>{selected.clear();renderIngredients();$("recommendations").innerHTML="";});
+$("showSubstitute").addEventListener("click",showSubstitute);
+renderIngredients();renderMissing();renderSaved();
+</script>
+</body>
+</html>
